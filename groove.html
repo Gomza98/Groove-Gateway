@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groove Gateway - SA Artist Booking Platform</title>
+    <meta name="description" content="Book amazing South African artists for your events. Musicians, DJs, bands and performers for weddings, parties, and corporate events.">
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/lucide-static@0.293.0/icons/music-3.svg" type="image/svg+xml">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+          * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #581c87 0%, #0f172a 50%, #312e81 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .animate-scale-in {
+            animation: scaleIn 0.3s ease-out forwards;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #a855f7;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 1.5rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #d1d5db;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #6d28d9, #db2777);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+            transition: all 0.3s;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Sections */
+        .section {
+            padding: 4rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        /* Artist Grid */
+        .artist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .artist-card {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .artist-image {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 0.75rem 0.75rem 0 0;
+        }
+
+        .artist-info {
+            padding: 1.5rem;
+        }
+
+        .artist-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .artist-genre {
+            background: rgba(124, 58, 237, 0.8);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            display: inline-block;
+            margin-bottom: 0.75rem;
+        }
+
+        .artist-description {
+            color: #d1d5db;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .star {
+            width: 1rem;
+            height: 1rem;
+            fill: #fbbf24;
+        }
+
+        .price {
+            color: #a855f7;
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Search and Filter */
+        .search-filter {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-input, .filter-select {
+            flex: 1;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            padding: 1rem;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-input::placeholder, .form-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn-whatsapp {
+            background: #25d366;
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background: #22c55e;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #d1d5db;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem 1.5rem;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .search-filter {
+                flex-direction: column;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            z-index: 200;
+            transform: translateX(100%);
+            transition: transform 0.3s;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid #10b981;
+        }
+
+        .toast.error {
+            border-left: 4px solid #ef4444;
+        }
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                gap: 1.5rem;
+                position: absolute;
+                background: rgba(0,0,0,0.95);
+                top: 100%;
+                left: 0;
+                width: 100%;
+                z-index: 100;
+                padding: 2rem 0;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-toggle {
+                display: block;
+            }
+        }
+        /* Add focus styles for accessibility */
+        .btn:focus, .form-input:focus, .form-select:focus, .form-textarea:focus, .close-btn:focus {
+            outline: 2px solid #a855f7;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                </svg>
+                <span>Groove Gateway</span>
+            </div>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Open menu">&#9776;</button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#artists">Artists</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Hero Section ...[rest of your HTML structure stays the same]... -->
+    <section id="home" class="hero">
+        <div class="animate-fade-in">
+            <h1>
+                Book Amazing
+                <span class="gradient-text">SA Artists</span>
+            </h1>
+            <p>
+                Discover and book talented South African musicians, DJs, and performers for your next event.
+                From corporate galas to traditional celebrations.
+            </p>
+            <div class="btn-group">
+                <a href="#artists" class="btn btn-primary">Browse Artists</a>
+                <button class="btn btn-outline" onclick="openBookingModal()">Book Now</button>
+            </div>
+        </div>
+    </section>
+    <!-- Featured Artists & All Artists Sections -->
+    <section class="section">
+        <h2 class="section-title">Featured Artists</h2>
+        <div class="artist-grid" id="featured-artists"></div>
+    </section>
+    <section id="artists" class="section" style="background: rgba(0, 0, 0, 0.2); margin: 0; max-width: 100%; padding: 4rem 1.5rem;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 class="section-title">All Artists</h2>
+            <div class="search-filter">
+                <input type="text" class="search-input" id="search-input" placeholder="Search artists or genres...">
+                <select class="filter-select" id="genre-filter">
+                    <option value="all">All Genres</option>
+                    <option value="afro-pop">Afro Pop</option>
+                    <option value="amapiano">Amapiano</option>
+                    <option value="house">House</option>
+                    <option value="kwaito">Kwaito</option>
+                    <option value="gospel">Gospel</option>
+                    <option value="jazz">Jazz</option>
+                    <option value="hip-hop">Hip-Hop</option>
+                    <option value="traditional">Traditional</option>
+                </select>
+            </div>
+            <div class="artist-grid" id="all-artists"></div>
+            <div id="no-results" class="hidden" style="text-align: center; padding: 3rem; color: #9ca3af;">
+                <p style="font-size: 1.125rem;">No artists found matching your search.</p>
+            </div>
+        </div>
+    </section>
+    <!-- ...Keep the rest (About, Contact, Footer, Modal, etc.)... -->
+    <section id="about" class="section" style="background: rgba(0, 0, 0, 0.2); margin: 0; max-width: 100%; padding: 4rem 1.5rem;">
+        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <h2 class="section-title">About SoundWave</h2>
+            <p style="font-size: 1.125rem; color: #d1d5db; margin-bottom: 2rem; line-height: 1.7;">
+                Connecting you to South Africa's vibrant music scene. Our curated roster features everything from Amapiano DJs to legendary jazz acts, making every event unforgettable.
+            </p>
+            <button class="btn btn-primary" onclick="openBookingModal()">Start Your Booking</button>
+        </div>
+    </section>
+    <section id="contact" class="section">
+        <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="glass-card" style="padding: 2rem;">
+                <p style="color: #d1d5db; margin-bottom: 1.5rem;">Ready to book an artist or have questions? We're here to help!</p>
+                <div style="color: white; margin-bottom: 1.5rem;">
+                    <div style="margin-bottom: 0.5rem;"><strong>Email:</strong> l.mmakola3@gmail.com</div>
+                    <div style="margin-bottom: 0.5rem;"><strong>Phone:</strong> 084 441 4181</div>
+                    <div><strong>WhatsApp:</strong> 084 441 4181</div>
+                </div>
+                <button class="btn btn-primary" onclick="openBookingModal()">Book an Artist Now</button>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="logo" style="justify-content: center; margin-bottom: 1rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+            </svg>
+            <span>Groove Gateway</span>
+        </div>
+        <p style="color: #9ca3af;">© 2025 Groove Gateway. All rights reserved.</p>
+    </footer>
+   <!-- Booking Modal -->
+<div id="booking-modal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-content animate-scale-in">
+        <div class="modal-header">
+            <h2 class="modal-title" id="modal-title">Book an Artist</h2>
+            <button class="close-btn" onclick="closeBookingModal()" aria-label="Close booking modal">&times;</button>
+        </div>
+        <div id="selected-artist-info" class="hidden" style="background: rgba(124, 58, 237, 0.2); border-radius: 0.5rem; padding: 1rem; margin-bottom: 1.5rem; border: 1px solid rgba(124, 58, 237, 0.3);">
+            <h3 id="selected-artist-name" style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem;"></h3>
+            <p id="selected-artist-genre" style="color: #a855f7;"></p>
+            <p id="selected-artist-price" style="color: #a855f7;"></p>
+        </div>
+        <form id="booking-form" autocomplete="off">
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label" for="client-name">Full Name *</label>
+                    <input type="text" name="client_name" id="client-name" class="form-input" required placeholder="Your full name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="client-email">Email *</label>
+                    <input type="email" name="client_email" id="client-email" class="form-input" required placeholder="your@email.com">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label" for="client-phone">Phone Number</label>
+                    <input type="tel" name="client_phone" id="client-phone" class="form-input" placeholder="084 441 4181">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="event-type">Event Type *</label>
+                    <select name="event_type" id="event-type" class="form-select" required>
+                        <option value="">Select event type</option>
+                        <option value="wedding">Wedding</option>
+                        <option value="corporate">Corporate Event</option>
+                        <option value="birthday">Birthday Party</option>
+                        <option value="festival">Festival</option>
+                        <option value="club">Club/Bar</option>
+                        <option value="private">Private Party</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label" for="event-date">Event Date *</label>
+                    <input type="date" name="event_date" id="event-date" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="guest-count">Expected Guests</label>
+                    <select name="guest_count" id="guest-count" class="form-select">
+                        <option value="">Number of guests</option>
+                        <option value="1-50">1-50 guests</option>
+                        <option value="51-100">51-100 guests</option>
+                        <option value="101-200">101-200 guests</option>
+                        <option value="201-500">201-500 guests</option>
+                        <option value="500+">500+ guests</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="event-location">Event Location *</label>
+                <input type="text" name="event_location" id="event-location" class="form-input" required placeholder="City, Province or Full Address">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="budget">Budget Range</label>
+                <select name="budget" id="budget" class="form-select">
+                    <option value="">Select budget range</option>
+                    <option value="under-5000">Under R5,000</option>
+                    <option value="5000-15000">R5,000 - R15,000</option>
+                    <option value="15000-30000">R15,000 - R30,000</option>
+                    <option value="30000-60000">R30,000 - R60,000</option>
+                    <option value="60000+">R60,000+</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="message">Additional Details</label>
+                <textarea name="message" id="message" class="form-textarea" placeholder="Tell us more about your event, music preferences, special requests, etc."></textarea>
+            </div>
+            <input type="hidden" name="artist_name" id="form-artist-name">
+            <input type="hidden" name="artist_genre" id="form-artist-genre">
+            <input type="hidden" name="artist_price" id="form-artist-price">
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary" id="form-submit-btn">
+                    Send Booking Request
+                </button>
+                <button type="button" class="btn btn-whatsapp" onclick="sendWhatsAppBooking()">
+                    Book via WhatsApp
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+  <script>
+    // South African Artists Data
+    const artists = [
+        {
+            id: 1,
+            name: "AmaPiano Queens",
+            genre: "Amapiano",
+            image: "images/amapiano queens.jpg",
+            description: "Chart-topping DJ duo bringing the best of Amapiano for unforgettable parties and events.",
+            rating: 3,
+            price: "From R15,000",
+            location: "Johannesburg, Gauteng"
+        },
+        {
+            id: 2,
+            name: "Zola Groove Ensemble",
+            genre: "Kwaito",
+            image: "images/kwaito.jpg",
+            description: "Classic Kwaito group, guaranteed to get the crowd moving. SA party legends.",
+            rating: 4,
+            price: "From R10,000",
+            location: "Soweto, Gauteng"
+        },
+        {
+            id: 3,
+            name: "Ms. Thando Jazz",
+            genre: "Jazz",
+            image:"images/singer.png",
+            description: "Soulful jazz vocalist with an authentic South African twist. Ideal for galas & dinners.",
+            rating: 4.5,
+            price: "From R12,000",
+            location: "Cape Town, Western Cape"
+        },
+        {
+            id: 4,
+            name: "Khaya Gospel Choir",
+            genre: "Gospel",
+            image: "images/gospel.jpg",
+            description: "Powerful voices and harmonies. Uplifting gospel for all occasions.",
+            rating: 3,
+            price: "From R8,000",
+            location: "Durban, KZN"
+        },
+        {
+            id: 5,
+            name: "Xhosa Heritage Band",
+            genre: "Traditional",
+            image: "images/traditional.jpg",
+            description: "Traditional Xhosa music and dance. Cultural authenticity for your event.",
+            rating: 4,
+            price: "From R10,000",
+            location: "Eastern Cape"
+        },
+        {
+            id: 6,
+            name: "Tshepo House Master",
+            genre: "House",
+            image: "images/masterkg.jpg",
+            description: "High-energy house DJ, resident at top SA clubs. Dance the night away.",
+            rating: 5,
+            price: "From R9,000",
+            location: "Pretoria, Gauteng"
+        },
+        {
+            id: 7,
+            name: "Afro Pop Stars",
+            genre: "Afro Pop",
+            image: "images/vusi.png",
+            description: "Young, dynamic band fusing Afro beats with pop for all ages.",
+            rating: 5,
+            price: "From R11,000",
+            location: "Bloemfontein, Free State"
+        },
+        {
+            id: 8,
+            name: "Ivyson",
+            genre: "Hip-Hop",
+            image: "images/nasty c.png",
+            description: "Award-winning hip-hop artist and energetic MC for modern events.",
+            rating: 5,
+            price: "From R30,000",
+            location: "Johannesburg, Gauteng"
+        }
+    ];
+    let selectedArtist = null;
+
+    // Generate star rating
+    function generateStars(rating) {
+        let stars = '';
+        for (let i = 1; i <= 5; i++) {
+            stars += `<svg class="star" viewBox="0 0 24 24" ${i <= rating ? 'fill="currentColor"' : 'fill="none" stroke="currentColor"'} style="vertical-align: middle;">
+                <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+            </svg>`;
+        }
+        return stars;
+    }
+
+    // Artist Card
+    function createArtistCard(artist, showBookButton = true) {
+        return `
+            <div class="glass-card artist-card" data-genre="${artist.genre.toLowerCase().replace(/[^a-z0-9]/g, '-')}">
+                <img src="${artist.image}" alt="${artist.name}" class="artist-image">
+                <div class="artist-info">
+                    <h3 class="artist-name">${artist.name}</h3>
+                    <span class="artist-genre">${artist.genre}</span>
+                    <p class="artist-description">${artist.description}</p>
+                    <div class="rating">
+                        ${generateStars(artist.rating)}
+                        <span style="margin-left: 0.5rem; color: white; font-size: 0.875rem;">(${artist.rating})</span>
+                    </div>
+                    <div class="price">${artist.price}</div>
+                    ${showBookButton ? `<button class="btn btn-primary" style="width: 100%;" onclick="openBookingModal(${artist.id})">Book Artist</button>` : ''}
+                </div>
+            </div>
+        `;
+    }
+
+    // Featured artists (top 3 by rating)
+    function populateFeaturedArtists() {
+        const featuredContainer = document.getElementById('featured-artists');
+        const featuredArtists = artists
+            .slice()
+            .sort((a, b) => b.rating - a.rating)
+            .slice(0, 3);
+        featuredContainer.innerHTML = featuredArtists.map(artist => createArtistCard(artist)).join('');
+    }
+    function populateAllArtists() {
+        const allContainer = document.getElementById('all-artists');
+        allContainer.innerHTML = artists.map(artist => createArtistCard(artist)).join('');
+    }
+
+    // Filtering logic
+    function filterArtists() {
+        const searchTerm = document.getElementById('search-input').value.toLowerCase();
+        const selectedGenre = document.getElementById('genre-filter').value;
+        const artistCards = document.querySelectorAll('#all-artists .artist-card');
+        const noResults = document.getElementById('no-results');
+        let visibleCount = 0;
+        artistCards.forEach(card => {
+            const artistName = card.querySelector('.artist-name').textContent.toLowerCase();
+            const artistGenre = card.querySelector('.artist-genre').textContent.toLowerCase();
+            const cardGenre = card.dataset.genre;
+            const matchesSearch = artistName.includes(searchTerm) || artistGenre.includes(searchTerm);
+            const matchesGenre = selectedGenre === 'all' || cardGenre === selectedGenre.replace(/[^a-z0-9]/g, '-');
+            if (matchesSearch && matchesGenre) {
+                card.style.display = 'block';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        noResults.classList.toggle('hidden', visibleCount > 0);
+    }
+
+    // Modal logic
+    function openBookingModal(artistId = null) {
+        const modal = document.getElementById('booking-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const selectedArtistInfo = document.getElementById('selected-artist-info');
+        // Fill hidden artist fields for form
+        if (artistId) {
+            selectedArtist = artists.find(artist => artist.id === artistId);
+            modalTitle.textContent = `Book ${selectedArtist.name}`;
+            document.getElementById('selected-artist-name').textContent = selectedArtist.name;
+            document.getElementById('selected-artist-genre').textContent = `Genre: ${selectedArtist.genre}`;
+            document.getElementById('selected-artist-price').textContent = `Starting at: ${selectedArtist.price}`;
+            document.getElementById('form-artist-name').value = selectedArtist.name;
+            document.getElementById('form-artist-genre').value = selectedArtist.genre;
+            document.getElementById('form-artist-price').value = selectedArtist.price;
+            selectedArtistInfo.classList.remove('hidden');
+        } else {
+            selectedArtist = null;
+            modalTitle.textContent = 'Book an Artist';
+            document.getElementById('form-artist-name').value = '';
+            document.getElementById('form-artist-genre').value = '';
+            document.getElementById('form-artist-price').value = '';
+            selectedArtistInfo.classList.add('hidden');
+        }
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeBookingModal() {
+        const modal = document.getElementById('booking-modal');
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        document.getElementById('booking-form').reset();
+    }
+
+    // Toast notification
+    function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `
+            <div style="font-weight: 600; margin-bottom: 0.25rem;">${type === 'success' ? 'Success!' : 'Error!'}</div>
+            <div style="font-size: 0.875rem; color: #d1d5db;">${message}</div>
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.classList.add('show'), 100);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => document.body.removeChild(toast), 300);
+        }, 4000);
+    }
+
+    // WhatsApp message
+    function generateWhatsAppMessage() {
+        const eventDate = document.getElementById('event-date').value;
+        const eventDateStr = eventDate ? new Date(eventDate).toLocaleDateString('en-ZA', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        }) : "TBD";
+        return encodeURIComponent(`
+🎵 *Groove Gateway Booking Request* 🎵
+
+${selectedArtist ? `Artist: ${selectedArtist.name} (${selectedArtist.genre})` : "General Booking Inquiry"}
+
+*Client Details:*
+Name: ${document.getElementById('client-name').value}
+Email: ${document.getElementById('client-email').value}
+Phone: ${document.getElementById('client-phone').value}
+
+*Event Details:*
+Type: ${document.getElementById('event-type').value}
+Date: ${eventDateStr}
+Location: ${document.getElementById('event-location').value}
+Guest Count: ${document.getElementById('guest-count').value}
+Budget: ${document.getElementById('budget').value}
+
+*Message:*
+${document.getElementById('message').value}
+
+Please confirm availability and next steps. Thank you!
+        `.trim());
+    }
+    function sendWhatsAppBooking() {
+        const requiredFields = ['client-name', 'client-email', 'event-type', 'event-date', 'event-location'];
+        const missingFields = requiredFields.filter(field => !document.getElementById(field).value);
+        if (missingFields.length > 0) {
+            showToast('Please fill in all required fields before sending WhatsApp message.', 'error');
+            return;
+        }
+        const message = generateWhatsAppMessage();
+        const whatsappUrl = `https://wa.me/27844414181?text=${message}`;
+        window.open(whatsappUrl, '_blank');
+    }
+
+    // "mailto:" free booking email
+    function sendMailtoBooking() {
+        const name = document.getElementById('client-name').value;
+        const email = document.getElementById('client-email').value;
+        const phone = document.getElementById('client-phone').value;
+        const eventType = document.getElementById('event-type').value;
+        const eventDate = document.getElementById('event-date').value;
+        const guestCount = document.getElementById('guest-count').value;
+        const eventLocation = document.getElementById('event-location').value;
+        const budget = document.getElementById('budget').value;
+        const message = document.getElementById('message').value;
+        const artist = selectedArtist ? selectedArtist.name + " (" + selectedArtist.genre + ")" : "No artist selected";
+
+        if (!name || !email || !eventType || !eventDate || !eventLocation) {
+            showToast("Please fill in all required fields.", "error");
+            return;
+        }
+
+        const body = encodeURIComponent(
+            `Artist: ${artist}\n\n` +
+            `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n` +
+            `Event Type: ${eventType}\nEvent Date: ${eventDate}\nLocation: ${eventLocation}\nGuests: ${guestCount}\nBudget: ${budget}\n\n` +
+            `Additional Details:\n${message}`
+        );
+        const mailto = `mailto:l.mmakola3@gmail.com?subject=Groove Gateway Booking Request&body=${body}`;
+        window.location.href = mailto;
+
+        // Optional: show a toast and close modal for UX
+        showToast("Booking email opened in your email app!", "success");
+        closeBookingModal();
+    }
+
+    // Hook up the events
+    document.getElementById('search-input').addEventListener('input', filterArtists);
+    document.getElementById('genre-filter').addEventListener('change', filterArtists);
+
+    // Modal outside click close
+    document.getElementById('booking-modal').addEventListener('click', function(e) {
+        if (e.target === this) closeBookingModal();
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+            // Close nav on mobile
+            const navLinks = document.getElementById('nav-links');
+            if (navLinks) navLinks.classList.remove('active');
+        });
+    });
+
+    // Set minimum date
+    document.getElementById('event-date').min = new Date().toISOString().split('T')[0];
+
+    // NAV: Hamburger for mobile
+    const navToggle = document.getElementById('nav-toggle');
+    if (navToggle) {
+        navToggle.addEventListener('click', function () {
+            document.getElementById('nav-links').classList.toggle('active');
+        });
+    }
+
+    // Replace the submit handler for your booking form
+    document.getElementById('booking-form').onsubmit = function(e) {
+        e.preventDefault();
+        sendMailtoBooking();
+    };
+
+    // INIT
+    document.addEventListener('DOMContentLoaded', function() {
+        populateFeaturedArtists();
+        populateAllArtists();
+    });
+</script>
+
+
+</body>
+</html>
